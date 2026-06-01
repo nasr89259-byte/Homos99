@@ -1,336 +1,480 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" id="html-root">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="site-title">مكتبتي العالمية | تحميل وقراءة كتب بالمجان وروايات PDF</title>
-    <meta name="description" content="أكبر دليل للكتب المجانية والمفتوحة. ابحث عن كتب بالمجان، روايات رعب، تنمية بشرية، وأدب عالمي بروابط تحميل وقراءة مباشرة وسريعة.">
-    <meta name="keywords" content="كتب بالمجان, تحميل كتب, روايات pdf, نجيب محفوظ, كتب مجانية, قراءة اونلاين">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght=400;600;700&display=swap" rel="stylesheet">
-    
+    <title>المكتبة الرقمية الذكية - 50 كتاباً</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Cairo', sans-serif; background-color: #f4f6f9; color: #1f2937; line-height: 1.6; }
-        .main-header { background-color: #0b3c2c; color: #ffffff; display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
-        .logo { font-size: 24px; font-weight: 700; }
-        .nav-menu { display: flex; align-items: center; gap: 15px; }
-        .nav-btn { background-color: transparent; border: 1px solid #52b788; color: #ffffff; padding: 6px 15px; border-radius: 20px; font-family: 'Cairo', sans-serif; font-weight: 600; cursor: pointer; transition: all 0.3s; }
-        .nav-btn:hover { background-color: #52b788; color: #0b3c2c; }
-        .login-trigger { background-color: #22c55e; border-color: #22c55e; }
-        .login-trigger:hover { background-color: #16a34a; color: white; }
-        .user-welcome { font-weight: 600; color: #52b788; background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 15px; }
-        .hero-banner { background: linear-gradient(135deg, #0f4c3a, #1e3a1e); color: #ffffff; text-align: center; padding: 80px 20px; }
-        .hero-banner h1 { font-size: 36px; margin-bottom: 15px; }
-        .hero-banner p { font-size: 16px; margin-bottom: 35px; opacity: 0.85; }
-        .search-box { display: flex; justify-content: center; max-width: 650px; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border-radius: 8px; overflow: hidden; }
-        .search-box input { flex-grow: 1; padding: 15px 20px; border: none; font-family: 'Cairo', sans-serif; font-size: 16px; outline: none; }
-        .search-box button { background-color: #22c55e; color: white; border: none; padding: 0 25px; font-family: 'Cairo', sans-serif; font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.3s; }
-        .search-box button:hover { background-color: #16a34a; }
-        .catalog-container { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
-        .section-title { font-size: 26px; margin-bottom: 30px; border-inline-start: 6px solid #22c55e; padding-inline-start: 15px; }
-        .books-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .book-card { background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column; border: 1px solid #e5e7eb; transition: transform 0.3s, box-shadow 0.3s; }
-        .book-card:hover { transform: translateY(-8px); box-shadow: 0 12px 20px rgba(0,0,0,0.1); }
-        
-        .book-cover-wrapper { height: 220px; width: 100%; background-color: #e5e7eb; display: flex; justify-content: center; align-items: center; overflow: hidden; border-bottom: 1px solid #f0f0f0; }
-        .book-cover-img { width: 100%; height: 100%; object-fit: cover; }
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --bg-color: #f5f6fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+        }
 
-        .book-details { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
-        .book-title { font-size: 20px; color: #111827; margin-bottom: 8px; }
-        .book-author { font-size: 14px; color: #4b5563; margin-bottom: 15px; font-weight: 600; }
-        .book-desc { font-size: 14px; color: #6b7280; margin-bottom: 25px; flex-grow: 1; }
-        .btn-redirect { display: block; text-align: center; background-color: #0f4c3a; color: white; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: 600; transition: background 0.3s; }
-        .btn-redirect:hover { background-color: #16a34a; }
-        
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background-color: white; padding: 35px 30px; border-radius: 16px; width: 90%; max-width: 420px; position: relative; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: #9ca3af; }
-        .close-btn:hover { color: #111827; }
-        
-        .auth-tabs { display: flex; border-bottom: 2px solid #e5e7eb; margin-bottom: 20px; margin-top: 15px; }
-        .tab-btn { flex: 1; padding: 10px; border: none; background: none; font-family: 'Cairo', sans-serif; font-size: 16px; font-weight: 600; cursor: pointer; color: #6b7280; }
-        .tab-btn.active { color: #0b3c2c; border-bottom: 3px solid #22c55e; }
-        
-        .login-form-element { display: flex; flex-direction: column; gap: 12px; }
-        .login-form-element input { padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 14px; outline: none; }
-        .login-form-element button.submit-btn { background-color: #0b3c2c; color: white; border: none; padding: 12px; border-radius: 8px; font-family: 'Cairo', sans-serif; font-weight: 600; cursor: pointer; font-size: 16px; transition: background 0.3s; }
-        .login-form-element button.submit-btn:hover { background-color: #22c55e; }
-        
-        .divider { display: flex; align-items: center; text-align: center; color: #9ca3af; font-size: 13px; margin: 15px 0; }
-        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #e5e7eb; }
-        .divider:not(:empty)::before { margin-inline-end: .25em; }
-        .divider:not(:empty)::after { margin-inline-start: .25em; }
-        
-        .google-btn { display: flex; align-items: center; justify-content: center; gap: 10px; background-color: #ffffff; color: #374151; border: 1px solid #d1d5db; padding: 11px; border-radius: 8px; font-family: 'Cairo', sans-serif; font-weight: 600; font-size: 14px; cursor: pointer; transition: background 0.3s; width: 100%; }
-        .google-btn:hover { background-color: #f9fafb; border-color: #9ca3af; }
-        .google-svg-icon { width: 18px; height: 18px; }
-        
-        .hidden { display: none !important; }
-        .no-results { text-align: center; grid-column: 1 / -1; color: #6b7280; font-size: 18px; padding: 40px 0; }
-        .main-footer { text-align: center; padding: 25px; background-color: #111827; color: #9ca3af; font-size: 13px; margin-top: 60px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        /* أدوات التحكم: البحث والتصفية */
+        .controls {
+            max-width: 1200px;
+            margin: 0 auto 30px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--primary-color);
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background-color: #e1e8ed;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e1e8ed;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin: 0 0 10px 0;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            line-height: 1.4;
+        }
+
+        .card p {
+            margin: 0 0 20px 0;
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .btn {
+            display: block;
+            text-align: center;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #c0392b;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="logo">📚 <span id="text-logo">مكتبتي</span></div>
-        <nav class="nav-menu">
-            <button id="btn-lang" class="nav-btn">English</button>
-            <button id="btn-login-toggle" class="nav-btn login-trigger" onclick="toggleLoginModal()">تسجيل الدخول</button>
-            <span id="user-welcome" class="user-welcome hidden"></span>
-        </nav>
+<div class="container">
+    <header>
+        <h1>المكتبة الرقمية التعليمية الذكية</h1>
+        <p>ابحث وصفّي بين 50 كتاباً بروابط مباشرة من مؤسسة هنداوي</p>
     </header>
 
-    <div id="login-modal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <span class="close-btn" onclick="toggleLoginModal()">&times;</span>
-            
-            <div class="auth-tabs">
-                <button id="tab-login" class="tab-btn active" onclick="switchAuthTab('login')">تسجيل دخول</button>
-                <button id="tab-register" class="tab-btn" onclick="switchAuthTab('register')">إنشاء حساب</button>
-            </div>
-
-            <form id="form-login" class="login-form-element" onsubmit="handleAuthSubmit(event, 'login')">
-                <input type="email" id="login-email" placeholder="البريد الإلكتروني" required>
-                <input type="password" id="login-password" placeholder="كلمة المرور" required>
-                <button type="submit" class="submit-btn" id="btn-submit-text">دخول</button>
-            </form>
-
-            <form id="form-register" class="login-form-element hidden" onsubmit="handleAuthSubmit(event, 'register')">
-                <input type="text" id="reg-name" placeholder="الاسم الكامل" required>
-                <input type="email" id="reg-email" placeholder="البريد الإلكتروني" required>
-                <input type="password" id="reg-password" placeholder="كلمة المرور القوية" required>
-                <button type="submit" class="submit-btn" id="btn-reg-text">إنشاء حساب جديد</button>
-            </form>
-
-            <div class="divider" id="text-or">أو عبر حساباتك</div>
-
-            <button type="button" class="google-btn" onclick="handleGoogleLogin()">
-                <svg class="google-svg-icon" viewBox="0 0 24 24">
-                    <path fill="#EA4335" d="M5.266 9.765A7.077 7.077 0 0 1 12 4.909c1.69 0 3.218.6 4.418 1.582L19.91 3A11.94 11.94 0 0 0 12 .909a11.94 11.94 0 0 0-8.659 3.646l1.925 5.21Z"/>
-                    <path fill="#4285F4" d="M23.455 12.273c0-.818-.068-1.614-.205-2.386H12v4.523h6.432a5.545 5.545 0 0 1-2.398 3.641l3.716 2.877c2.173-2.005 3.705-4.955 3.705-8.655Z"/>
-                    <path fill="#FBBC05" d="M3.341 5.555A11.94 11.94 0 0 0 1.091 12c0 2.345.682 4.545 1.841 6.41l3.782-2.932A7.03 7.03 0 0 1 6.091 12c0-1.345.377-2.614 1.032-3.691L3.341 5.555Z"/>
-                    <path fill="#34A853" d="M6.714 15.477a7.07 7.07 0 0 1-1.023-3.477c0-1.282.341-2.495.945-3.55L2.855 3.236A11.94 11.94 0 0 0 1.091 12c0 3.514 1.514 6.677 3.932 8.914l1.691-5.437Z"/>
-                </svg>
-                <span id="text-google-btn">الدخول باستخدام حساب Google</span>
-            </button>
+    <div class="controls">
+        <input type="text" id="searchInput" class="search-box" placeholder="ابحث عن كتاب أو كلمة في الوصف...">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">الكل</button>
+            <button class="filter-btn" data-filter="literature">الأدب والروايات</button>
+            <button class="filter-btn" data-filter="history">التاريخ والحضارات</button>
+            <button class="filter-btn" data-filter="philosophy">الفلسفة والاجتماع</button>
+            <button class="filter-btn" data-filter="science">العلوم والتنمية</button>
+            <button class="filter-btn" data-filter="arts">الفنون والمغامرات</button>
         </div>
     </div>
 
-    <section class="hero-banner">
-        <h1 id="hero-title">مرحباً بك في عالم الكتب المفتوحة</h1>
-        <p id="hero-desc">ابحث عن أي كتاب (نجيب محفوظ، أحمد شوقي، روايات عالمية) وسنوجهك للمصدر فوراً</p>
-        <div class="search-box">
-            <input type="text" id="search-input" placeholder="اكتب اسم الكتاب، المؤلف، أو الكلمة المفتاحية...">
-            <button type="button" id="btn-search" onclick="executeSearch()">ابحث الآن</button>
+    <div class="grid" id="booksGrid">
+        <div class="card" data-category="literature">
+            <h3>1. ألف ليلة وليلة</h3>
+            <p>أحد أشهر الكتب في تاريخ الأدب العربي، يضم حكايات شهرزاد الشهيرة.</p>
+            <a href="https://www.hindawi.org/books/14589251/" target="_blank" class="btn">قراءة / تحميل</a>
         </div>
-    </section>
+        <div class="card" data-category="literature">
+            <h3>2. النبي</h3>
+            <p>روعة جبران خليل جبران في الفلسفة والتأملات الإنسانية النثرية.</p>
+            <a href="https://www.hindawi.org/books/19273934/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="literature">
+            <h3>3. الأجنحة المتكسرة</h3>
+            <p>رواية رومانسية شهيرة للكاتب والشاعر جبران خليل جبران.</p>
+            <a href="https://www.hindawi.org/books/15867137/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="literature">
+            <h3>4. دون كيشوت</h3>
+            <p>روائع الأدب العالمي لميجيل دي ثيربانتس، مغامرات الفارس النبيل.</p>
+            <a href="https://www.hindawi.org/books/51842018/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="literature">
+            <h3>5. الأيام</h3>
+            <p>السيرة الذاتية الشهيرة لعميد الأدب العربي الدكتور طه حسين.</p>
+            <a href="https://www.hindawi.org/books/61214013/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="literature">
+            <h3>6. دعاء الكروان</h3>
+            <p>رواية درامية رائعة لطه حسين تناقش قضايا اجتماعية في الريف المصري.</p>
+            <a href="https://www.hindawi.org/books/95462061/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="literature">
+            <h3>7. شجرة البؤس</h3>
+            <p>رواية اجتماعية عميقة ترصد تحولات المجتمع لعميد الأدب طه حسين.</p>
+            <a href="https://www.hindawi.org/books/31735125/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="literature">
+            <h3>8. مغامرات هكلبري فن</h3>
+            <p>الرواية الكلاسيكية الشهيرة للكاتب الأمريكي مارك توين.</p>
+            <a href="https://www.hindawi.org/books/35804518/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="literature">
+            <h3>9. أولاد حارتنا</h3>
+            <p>من أشهر روايات الكاتب الكبير الفائز بنوبل نجيب محفوظ.</p>
+            <a href="https://www.hindawi.org/books/83168172/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="literature">
+            <h3>10. كليلة ودمنة</h3>
+            <p>قصص الحيوان ذات الأبعاد والحكم السياسية والاجتماعية لابن المقفع.</p>
+            <a href="https://www.hindawi.org/books/64627092/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
 
-    <main class="catalog-container">
-        <h2 id="catalog-title" class="section-title">المخزون المتوفر</h2>
-        <div class="books-grid" id="books-container"></div>
-    </main>
+        <div class="card" data-category="history">
+            <h3>11. مصر القديمة</h3>
+            <p>موسوعة تاريخ مصر القديمة والحضارة الفرعونية للمؤرخ سليم حسن.</p>
+            <a href="https://www.hindawi.org/books/38318491/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="history">
+            <h3>12. عبقرية محمد</h3>
+            <p>دراسة نفسية وفكرية متميزة لعبقرية الرسول من كتابات عباس العقاد.</p>
+            <a href="https://www.hindawi.org/books/87243950/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="history">
+            <h3>13. عبقرية عمر</h3>
+            <p>تحليل لشخصية الخليفة عمر بن الخطاب الإدارية والقيادية للعقاد.</p>
+            <a href="https://www.hindawi.org/books/15949216/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="history">
+            <h3>14. عبقرية الصديق</h3>
+            <p>قراءة عميقة في حياة وشخصية أول الخلفاء الراشدين عباس العقاد.</p>
+            <a href="https://www.hindawi.org/books/24604928/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="history">
+            <h3>15. فجر الضمير</h3>
+            <p>كتاب جيمس هنري برستد الرائع حول نشأة الأخلاق في مصر القديمة.</p>
+            <a href="https://www.hindawi.org/books/42940213/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="history">
+            <h3>16. قصة الحضارة</h3>
+            <p>مقتطفات ومجلدات من الموسوعة التاريخية الكبرى لويل ديورانت.</p>
+            <a href="https://www.hindawi.org/books/45136892/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="history">
+            <h3>17. تاريخ مصر لتفتيش الآثار</h3>
+            <p>كتاب تاريخي يوثق الآثار المصرية والاكتشافات عبر العصور.</p>
+            <a href="https://www.hindawi.org/books/16470354/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="history">
+            <h3>18. تاريخ الفكر الأندلسي</h3>
+            <p>دراسة شاملة للحركة الفكرية والثقافية في الأندلس الإسلامية.</p>
+            <a href="https://www.hindawi.org/books/91795735/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="history">
+            <h3>19. العرب: تاريخ موجز</h3>
+            <p>كتاب يقدم نظرة عامة وتاريخية وسريعة على مسيرة الأمة العربية.</p>
+            <a href="https://www.hindawi.org/books/32686149/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="history">
+            <h3>20. شخصية مصر</h3>
+            <p>دراسة في عبقرية المكان والجغرافيا التاريخية من وحي أفكار الجغرافيين.</p>
+            <a href="https://www.hindawi.org/books/21961294/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
 
-    <footer class="main-footer">
-        <p id="footer-text">جميع الكتب يتم توجيهها إلى روابط ومصادر مفتوحة ومشاع إبداعي قانوني</p>
-    </footer>
+        <div class="card" data-category="philosophy">
+            <h3>21. جمهورية أفلاطون</h3>
+            <p>الكتاب الفلسفي الشهير الذي يؤسس للمدينة الفاضلة والسياسة والدولة.</p>
+            <a href="https://www.hindawi.org/books/61685843/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="philosophy">
+            <h3>22. هكذا تكلم زرادشت</h3>
+            <p>الفلسفة العميقة والمثيرة للجدل للفيلسوف الألماني فريدريش نيتشه.</p>
+            <a href="https://www.hindawi.org/books/31034045/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="philosophy">
+            <h3>23. مقدمة ابن خلدون</h3>
+            <p>كتاب التأسيس الأول لعلم الاجتماع البشري وفلسفة التاريخ.</p>
+            <a href="https://www.hindawi.org/books/98460517/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="philosophy">
+            <h3>24. الأمير</h3>
+            <p>دراسة نيكولو ميكافيلي الشهيرة في السياسة والحكم وفنون القيادة.</p>
+            <a href="https://www.hindawi.org/books/76359521/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="philosophy">
+            <h3>25. فن الحرب</h3>
+            <p>الاستراتيجيات العسكرية والقيادية القديمة والخالدة للمؤلف سون تزو.</p>
+            <a href="https://www.hindawi.org/books/38173489/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="philosophy">
+            <h3>26. سيكولوجية الجماهير</h3>
+            <p>دراسة غوستاف لوبون الشهيرة حول سلوك الجماعات وتأثير الإعلام.</p>
+            <a href="https://www.hindawi.org/books/29285038/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="philosophy">
+            <h3>27. العقد الاجتماعي</h3>
+            <p>الفلسفة السياسية التنويرية للمفكر الفرنسي جان جاك روسو.</p>
+            <a href="https://www.hindawi.org/books/83648013/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="philosophy">
+            <h3>28. دفاع عن العقل</h3>
+            <p>كتاب فكري يدعو لإعمال العقل والمنطق في مناقشة القضايا الحياتية.</p>
+            <a href="https://www.hindawi.org/books/41269384/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="philosophy">
+            <h3>29. تجديد الفكر العربي</h3>
+            <p>دراسة نقدية وفلسفية للمفكر المصري الكبير زكي نجيب محمود.</p>
+            <a href="https://www.hindawi.org/books/89276231/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="philosophy">
+            <h3>30. خرافة الميتافيزيقا</h3>
+            <p>طرح فلسفي مميز يناقش الوضعية المنطقية للدكتور زكي نجيب محمود.</p>
+            <a href="https://www.hindawi.org/books/16812852/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
 
-    <script>
-        const booksDatabase = [
-            { id: 1, title_ar: "مقدمة ابن خلدون", title_en: "Muqaddimah", author_ar: "ابن خلدون", author_en: "Ibn Khaldun", desc_ar: "مؤسس علم الاجتماع وأروع ما كُتب في التاريخ والبشر.", desc_en: "The foundational work of sociology and world history.", url: "https://archive.org/details/0001Pdf", tags: ["تاريخ", "فلسفة"], cover: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=400" },
-            { id: 2, title_ar: "بين القصرين", title_en: "Palace Walk", author_ar: "نجيب محفوظ", author_en: "Naguib Mahfouz", desc_ar: "الجزء الأول من الثلاثية الشهيرة لأديب نوبل المصري.", desc_en: "First part of the Cairo Trilogy by the Egyptian Nobel laureate.", url: "https://archive.org/details/NaguibMahfouz", tags: ["روايات", "مصر"], cover: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=400" },
-            { id: 3, title_ar: "قصر الشوق", title_en: "Palace of Desire", author_ar: "نجيب محفوظ", author_en: "Naguib Mahfouz", desc_ar: "الجزء الثاني من الثلاثية واستمرار لملحمة العائلة المصرية.", desc_en: "The gripping second volume of the Cairo Trilogy.", url: "https://archive.org/details/NaguibMahfouz", tags: ["روايات", "مصر"], cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=400" },
-            { id: 4, title_ar: "السكرية", title_en: "Sugar Street", author_ar: "نجيب محفوظ", author_en: "Naguib Mahfouz", desc_ar: "خاتمة الثلاثية التاريخية وتطور الأجيال في مصر.", desc_en: "The dramatic conclusion of Mahfouz's masterpiece trilogy.", url: "https://archive.org/details/NaguibMahfouz", tags: ["روايات", "مصر"], cover: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=400" },
-            { id: 5, title_ar: "الأيام", title_en: "Al-Ayyam", author_ar: "طه حسين", author_en: "Taha Hussein", desc_ar: "السيرة الذاتية لعميد الأدب العربي بأسلوب قصصي عذب.", desc_en: "The classic autobiography of the Dean of Arabic Literature.", url: "https://www.hindawi.org/books/64790130/", tags: ["سيرة", "أدب"], cover: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=400" },
-            { id: 6, title_ar: "العبقريات", title_en: "The Genius Series", author_ar: "عباس محمود العقاد", author_en: "Abbas El-Akkad", desc_ar: "سلسلة عبقرية محمد وعمر وأبو بكر بتحليل نفسي وفكري مبهر.", desc_en: "A brilliant analytical series on Islamic historic figures.", url: "https://www.hindawi.org/books/21740925/", tags: ["دين", "تاريخ"], cover: "https://images.unsplash.com/photo-1532012164546-f432f2c3edd0?q=80&w=400" },
-            { id: 7, title_ar: "يا طالع الشجرة", title_en: "The Tree Climber", author_ar: "توفيق الحكيم", author_en: "Tawfiq Al-Hakim", desc_ar: "رائعة مسرح اللامعقول من رائد المسرح العربي.", desc_en: "A masterpiece of the theatre of the absurd by Egypt's top playwright.", url: "https://www.hindawi.org/books/12470719/", tags: ["مسرح", "أدب"], cover: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?q=80&w=400" },
-            { id: 8, title_ar: "عصفور من الشرق", title_en: "A Bird from the East", author_ar: "توفيق الحكيم", author_en: "Tawfiq Al-Hakim", desc_ar: "رواية فلسفية تناقش الصدام الحضاري بين الشرق والغرب.", desc_en: "A novel exploring the cultural clash between East and West.", url: "https://www.hindawi.org/books/90797305/", tags: ["روايات", "فلسفة"], cover: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=400" },
-            { id: 9, title_ar: "حوار مع صديقي الملحد", title_en: "Dialogue with an Atheist Friend", author_ar: "مصطفى محمود", author_en: "Mustafa Mahmoud", desc_ar: "نقاش فكري وفلسفي عميق يجيب عن أعقد الأسئلة الوجودية.", desc_en: "A profound intellectual discussion on faith and philosophy.", url: "https://archive.org/details/Dr-Mustafa-Mahmoud", tags: ["دين", "فلسفة"], cover: "https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?q=80&w=400" },
-            { id: 10, title_ar: "رحلتي من الشك إلى الإيمان", title_en: "My Journey from Doubt to Belief", author_ar: "مصطفى محمود", author_en: "Mustafa Mahmoud", desc_ar: "رحلة فكريّة شخصية يلخص فيها الدكتور مصطفى محمود تجربته.", desc_en: "An intellectual journey exploring science, philosophy, and faith.", url: "https://archive.org/details/Dr-Mustafa-Mahmoud", tags: ["دين", "سيرة"], cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=400" },
-            { id: 11, title_ar: "وحي القلم", title_en: "The Inspiration of the Pen", author_ar: "مصطفى صادق الرافعي", author_en: "Mustafa Sadiq Al-Rafe'ie", desc_ar: "من أروع ما كُتب في الأدب والنقد والبيان العربي البليغ.", desc_en: "A summit of Arabic eloquence, essays, and literary art.", url: "https://www.hindawi.org/books/72813583/", tags: ["أدب", "بلاغة"], cover: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=400" },
-            { id: 12, title_ar: "النظرات", title_en: "Al-Nazarat", author_ar: "مصطفى لطفي المنفلوطي", author_en: "Mustafa Lutfi Al-Manfaluti", desc_ar: "مجموعة مقالات اجتماعية وأدبية صاغها المنفلوطي بأسلوب باكي ساحر.", desc_en: "Classic social and literary essays written with extreme eloquence.", url: "https://archive.org/details/AlNazarat", tags: ["أدب", "مقالات"], cover: "https://images.unsplash.com/photo-1474366521946-c3d4b507abf2?q=80&w=400" },
-            { id: 13, title_ar: "العبرات", title_en: "Al-Abarat", author_ar: "مصطفى لطفي المنفلوطي", author_en: "Mustafa Lutfi Al-Manfaluti", desc_ar: "قصص تفيض بالرحمة والإنسانية والمشاعر العميقة.", desc_en: "A collection of short stories focusing on human emotions.", url: "https://archive.org/details/AlNazarat", tags: ["قصص", "روايات"], cover: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=400" },
-            { id: 14, title_ar: "الشوقيات", title_en: "Al-Shawqiyyat", author_ar: "أحمد شوقي", author_en: "Ahmed Shawqi", desc_ar: "الديوان الشعري الخالد لأمير الشعراء أحمد شوقي.", desc_en: "The complete poetic masterpiece by the Prince of Poets.", url: "https://archive.org/details/diwan-shawqi", tags: ["شعر", "ديوان"], cover: "https://images.unsplash.com/photo-1460518451285-cd3bf4802417?q=80&w=400" },
-            { id: 15, title_ar: "طوق الحمامة", title_en: "The Ring of the Dove", author_ar: "ابن حزم الأندلسي", author_en: "Ibn Hazm", desc_ar: "أشهر ما كُتب في تاريخ الأدب عن فلسفة الحب ومظاهره وطباعه.", desc_en: "The ultimate historic treatise on the psychology of love.", url: "https://archive.org/details/TauqAlHamama", tags: ["أدب", "فلسفة"], cover: "https://images.unsplash.com/photo-1518373714866-3f1478910cc0?q=80&w=400" },
-            { id: 16, title_ar: "الداء والدواء", title_en: "The Malady and the Remedy", author_ar: "ابن قيم الجوزية", author_en: "Ibn al-Qayyim", desc_ar: "كتاب تربوي ونفسي عظيم لإصلاح القلوب وتهذيب النفوس.", desc_en: "An Islamic masterpiece on spiritual healing and psychology.", url: "https://archive.org/details/0001Pdf", tags: ["دين", "علم نفس"], cover: "https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?q=80&w=400" },
-            { id: 17, title_ar: "تاريخ الخلفاء", title_en: "History of the Caliphs", author_ar: "جلال الدين السيوطي", author_en: "Al-Suyuti", desc_ar: "توثيق شامل لتاريخ الخلفاء الراشدين والدولة الأموية والعباسية.", desc_en: "A detailed historical record of the Islamic Caliphs.", url: "https://archive.org/details/waq49372", tags: ["تاريخ"], cover: "https://images.unsplash.com/photo-1461360370896-922624d12aa1?q=80&w=400" },
-            { id: 18, title_ar: "سير أعلام النبلاء", title_en: "Biographies of Noble Figures", author_ar: "الإمام الذهبي", author_en: "Al-Dhahabi", desc_ar: "موسوعة تاريخية ضخمة تراجم وتاريخ الشخصيات الإسلامية البارزة.", desc_en: "A massive biographical encyclopedia of prominent Islamic figures.", url: "https://archive.org/details/waq61723", tags: ["تاريخ", "سيرة"], cover: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=400" },
-            { id: 19, title_ar: "جمهرة رسائل العرب", title_en: "The Arab Letters Collection", author_ar: "أحمد زكي صفوت", author_en: "Ahmed Zaki Safwat", desc_ar: "مجموعة شاملة لرسائل ملوك وخطباء العرب في الجاهلية والإسلام.", desc_en: "An anthology of historical Arab letters and speeches.", url: "https://archive.org/details/jamharat", tags: ["تاريخ", "أدب"], cover: "https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=400" },
-            { id: 20, title_ar: "الاستعداد المالي للمستقبل", title_en: "Financial Planning for Future", author_ar: "مترجم عالمي", author_en: "Global Translation", desc_ar: "كتاب مترجم يبحث في أسس الثقافة المالية وكيفية إدارة الدخل.", desc_en: "A translated guide to personal finance and wealth management.", url: "https://archive.org/details/finance-books", tags: ["اقتصاد", "بيزنس"], cover: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=400" },
-            { id: 21, title_ar: "الأمير", title_en: "The Prince", author_ar: "نيقولا ميكافيلي", author_en: "Niccolò Machiavelli", desc_ar: "كتاب الفلسفة السياسية الأشهر عالمياً والخاص بآليات الحكم.", desc_en: "The world-renowned political treatise on governance and power.", url: "https://archive.org/details/theprince00machuoft", tags: ["سياسة", "فلسفة"], cover: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=400" },
-            { id: 22, title_ar: "غاتسبي العظيم", title_en: "The Great Gatsby", author_ar: "إف. سكوت فيتزجيرالد", author_en: "F. Scott Fitzgerald", desc_ar: "أيقونة الأدب الأمريكي الكلاسيكي التي تجسد عصر الجاز والنمو.", desc_en: "An absolute masterpiece of American literature and the Jazz Age.", url: "https://archive.org/details/thegreatgatsby00fitz", tags: ["روايات", "أمريكا"], cover: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=400" },
-            { id: 23, title_ar: "البؤساء", title_en: "Les Misérables", author_ar: "فيكتور هوجو", author_en: "Victor Hugo", desc_ar: "الملحمة الفرنسية الإنسانية الكبرى عن العدالة والظلم الاجتماعي.", desc_en: "The legendary French epic on social justice, love, and redemption.", url: "https://archive.org/details/lesmiserables00hugo", tags: ["روايات", "عالمي"], cover: "https://images.unsplash.com/photo-1491841573178-86d8c3b31314?q=80&w=400" },
-            { id: 24, title_ar: "رواية 1984", title_en: "1984", author_ar: "جورج أورويل", author_en: "George Orwell", desc_ar: "الرواية السوداوية الأشهر عالمياً عن الرقابة وسلطة الأخ الأكبر.", desc_en: "The definitive dystopian novel about totalitarianism and surveillance.", url: "https://archive.org/details/orwell1984pdf", tags: ["روايات", "سياسة"], cover: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=400" },
-            { id: 25, title_ar: "مزرعة الحيوان", title_en: "Animal Farm", author_ar: "جورج أورويل", author_en: "George Orwell", desc_ar: "إسقاط سياسي ساخر وعبقري في شكل قصة رمزية مبسطة.", desc_en: "A brilliant satirical allegory on power and corruption.", url: "https://archive.org/details/animalfarm00orwe", tags: ["روايات", "سياسة"], cover: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=400" },
-            { id: 26, title_ar: "مغامرات شارلوك هولمز", title_en: "The Adventures of Sherlock Holmes", author_ar: "آرثر كونان دويل", author_en: "Arthur Conan Doyle", desc_ar: "أشهر القصص البوليسية والتحقيق الذكي في تاريخ الأدب العالمي.", desc_en: "The iconic detective stories that defined the mystery genre.", url: "https://www.hindawi.org/books/24853018/", tags: ["بوليسي", "غموض"], cover: "https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=400" },
-            { id: 27, title_ar: "جريمة في قطار الشرق السريع", title_en: "Murder on the Orient Express", author_ar: "أجاثا كريستي", author_en: "Agatha Christie", desc_ar: "رائعة ملكة الغموض أجاثا كريستي مع المحقق الشهير هيركول بوارو.", desc_en: "Agatha Christie's absolute best-selling train mystery novel.", url: "https://archive.org/details/agatha-christie-collection", tags: ["غموض", "بوليسي"], cover: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=400" },
-            { id: 28, title_ar: "موت فوق النيل", title_en: "Death on the Nile", author_ar: "أجاثا كريستي", author_en: "Agatha Christie", desc_ar: "جريمة غامضة ومثيرة تحدث في قلب مصر وعلى ضفاف النيل الساحر.", desc_en: "A thrilling crime mystery taking place in Egypt along the Nile.", url: "https://archive.org/details/agatha-christie-collection", tags: ["غموض", "مصر"], cover: "https://images.unsplash.com/photo-1539650116574-8efeb43e2750?q=80&w=400" },
-            { id: 29, title_ar: "دون كيشوت", title_en: "Don Quixote", author_ar: "ميغيل دي ثيربانتس", author_en: "Miguel de Cervantes", desc_ar: "رواية هزلية كلاسيكية من الأدب الإسباني عن فارس الأوهام.", desc_en: "The founding work of Western literature about the idealistic knight.", url: "https://archive.org/details/donquixote00cerv", tags: ["روايات", "عالمي"], cover: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=400" },
-            { id: 30, title_ar: "الجريمة والعقاب", title_en: "Crime and Punishment", author_ar: "فيودور دوستويفسكي", author_en: "Fyodor Dostoevsky", desc_ar: "الرواية النفسية الروسية الأعمق في تحليل مشاعر الذنب والضمير.", desc_en: "The ultimate Russian psychological novel on guilt and redemption.", url: "https://archive.org/details/crimepunishment00dost", tags: ["روايات", "علم نفس"], cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=400" },
-            { id: 31, title_ar: "الإخوة كارامازوف", title_en: "The Brothers Karamazov", author_ar: "فيودور دوستويفسكي", author_en: "Fyodor Dostoevsky", desc_ar: "قمة أعمال دوستويفسكي الفلسفية التي تناقش الأخلاق والإيمان.", desc_en: "Dostoevsky's deepest philosophical study on morality and family.", url: "https://archive.org/details/brotherskaramaza00dost", tags: ["روايات", "فلسفة"], cover: "https://images.unsplash.com/photo-1604871000636-074fa5117945?q=80&w=400" },
-            { id: 32, title_ar: "النبي", title_en: "The Prophet", author_ar: "جبران خليل جبران", author_en: "Gibran Khalil Gibran", desc_ar: "مجموعة من المقولات الشعرية والفلسفية التي تُرجمت لكل لغات العالم.", desc_en: "Gibran's international masterpiece containing poetic philosophies.", url: "https://www.hindawi.org/books/12185465/", tags: ["فلسفة", "أدب"], cover: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?q=80&w=400" },
-            { id: 33, title_ar: "الأجنحة المتكسرة", title_en: "Broken Wings", author_ar: "جبران خليل جبران", author_en: "Gibran Khalil Gibran", desc_ar: "رواية رومانسية حزينة تستعرض مشاعر الحب العذري والتقاليد والقيود.", desc_en: "A beautiful, poetic prose story about tragic love and society.", url: "https://www.hindawi.org/books/41818290/", tags: ["روايات", "أدب"], cover: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=400" },
-            { id: 34, title_ar: "رواية فرانكنشتاين", title_en: "Frankenstein", author_ar: "ماري شيلي", author_en: "Mary Shelley", desc_ar: "أصل أدب الخيال العلمي والرعب وتحدي الطبيعة والتكنولوجيا.", desc_en: "The legendary gothic novel that birthed science fiction.", url: "https://www.hindawi.org/books/63617307/", tags: ["رعب", "خيال علمي"], cover: "https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=400" },
-            { id: 35, title_ar: "دراكولا", title_en: "Dracula", author_ar: "برام ستوكر", author_en: "Bram Stoker", desc_ar: "الرواية القوطية الكلاسيكية التي أسست لأسطورة مصاصي الدماء العالمية.", desc_en: "The definitive vampire novel that shaped modern horror fiction.", url: "https://www.hindawi.org/books/17973059/", tags: ["رعب", "غموض"], cover: "https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=400" },
-            { id: 36, title_ar: "العجوز والبحر", title_en: "The Old Man and the Sea", author_ar: "إرنست همنغواي", author_en: "Ernest Hemingway", desc_ar: "رواية أمريكية حائزة على نوبل تجسد الصبر والإرادة البشرية ضد الطبيعة.", desc_en: "Hemingway's Nobel prize-winning novella about human resilience.", url: "https://archive.org/details/oldmansea00hemi", tags: ["روايات", "أمريكا"], cover: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=400" },
-            { id: 37, title_ar: "مغامرات توم سوير", title_en: "The Adventures of Tom Sawyer", author_ar: "مارك توين", author_en: "Mark Twain", desc_ar: "كلاسيكية أمريكية رائعة تحكي عن شقاوة الطفولة والمغامرة.", desc_en: "The quintessential American youth adventure story by Mark Twain.", url: "https://www.hindawi.org/books/39327506/", tags: ["قصص", "أمريكا"], cover: "https://images.unsplash.com/photo-1472289065668-ce650ac443d2?q=80&w=400" },
-            { id: 38, title_ar: "رواية مسخ الكائنات", title_en: "The Metamorphosis", author_ar: "فرانز كافكا", author_en: "Franz Kafka", desc_ar: "رواية وجودية عبقرية تستعرض تحول إنسان فجأة إلى حشرة ضخمة.", desc_en: "Kafka's masterpiece exploring alienation and existential dread.", url: "https://archive.org/details/metamorphosis00kafk", tags: ["روايات", "فلسفة"], cover: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=400" },
-            { id: 39, title_ar: "الكوميديا الإلهية", title_en: "The Divine Comedy", author_ar: "دانتي أليغييري", author_en: "Dante Alighieri", desc_ar: "ملحمة شعرية إيطالية من أعظم أعمال الأدب الغربي عبر العصور.", desc_en: "Dante's monumental Italian epic poem through the afterlife.", url: "https://archive.org/details/divinecomedyofda01dant", tags: ["شعر", "عالمي"], cover: "https://images.unsplash.com/photo-1464746133101-a2c3f88e0dd9?q=80&w=400" },
-            { id: 40, title_ar: "رواية أحدب نوتردام", title_en: "The Hunchback of Notre-Dame", author_ar: "فيكتور هوجو", author_en: "Victor Hugo", desc_ar: "قصة إنسانية مؤثرة عن الجمال الخارجي والداخلي في باريس التاريخية.", desc_en: "Hugo's grand romantic tragic story set in medieval Paris.", url: "https://archive.org/details/hunchbackofnotre00hugo", tags: ["روايات", "عالمي"], cover: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=400" },
-            { id: 41, title_ar: "الجمهورية", title_en: "The Republic", author_ar: "أفلاطون", author_en: "Plato", desc_ar: "الحوار الفلسفي اليوناني الأشهر حول العدالة وشكل الدولة الفاضلة.", desc_en: "Plato's legendary philosophical dialogue on justice and order.", url: "https://archive.org/details/platosrepublic00platuoft", tags: ["فلسفة", "سياسة"], cover: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=400" },
-            { id: 42, title_ar: "فن الحرب", title_en: "The Art of War", author_ar: "سون تزو", author_en: "Sun Tzu", desc_ar: "الكتاب الاستراتيجي الصيني المتبع في الإدارة والحروب والبيزنس عالمياً.", desc_en: "The ancient Chinese military treatise used in modern business and strategy.", url: "https://archive.org/details/theartofwar00sun", tags: ["استراتيجية", "بيزنس"], cover: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=400" },
-            { id: 43, title_ar: "هاملت", title_en: "Hamlet", author_ar: "وليام شكسبير", author_en: "William Shakespeare", desc_ar: "التراجيديا المسرحية الإنجليزية الأشهر وسؤالها الخالد: أكون أو لا أكون.", desc_en: "Shakespeare's most famous tragic play about revenge and madness.", url: "https://www.hindawi.org/books/65487680/", tags: ["مسرح", "أدب"], cover: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=400" },
-            { id: 44, title_ar: "روميو وجولييت", title_en: "Romeo and Juliet", author_ar: "وليام شكسبير", author_en: "William Shakespeare", desc_ar: "قصة الحب التراجيدية الأشهر في تاريخ البشرية وصراع العائلات.", desc_en: "The ultimate tragic romance play known worldwide.", url: "https://www.hindawi.org/books/94917534/", tags: ["مسرح", "رومانسية"], cover: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=400" },
-            { id: 45, title_ar: "كليلة ودمنة", title_en: "Kalila and Dimna", author_ar: "ابن المقفع", author_en: "Ibn al-Muqaffa", desc_ar: "قصص وحكم رائعة على ألسنة الحيوانات والطيور لتوجيه الحكام والبشر.", desc_en: "Famous ancient fables told by animals to deliver political wisdom.", url: "https://www.hindawi.org/books/34918231/", tags: ["قصص", "حكم"], cover: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400" },
-            { id: 46, title_ar: "ألف ليلة وليلة", title_en: "One Thousand and One Nights", author_ar: "تراث شعبى", author_en: "Arabian Nights Folk", desc_ar: "الحكايات الشرقية الأسطورية الخيالية التي ألهمت الأدب العالمي.", desc_en: "The legendary collection of Middle Eastern folk tales.", url: "https://archive.org/details/1001-nights-ar", tags: ["قصص", "خيال"], cover: "https://images.unsplash.com/photo-1519074069444-1ba4fffb6548?q=80&w=400" },
-            { id: 47, title_ar: "تاريخ موجز للزمن", title_en: "A Brief History of Time", author_ar: "ستيفن هوكينج", author_en: "Stephen Hawking", desc_ar: "كتاب علمي مبسط وشهير يشرح الثقوب السوداء ونشأة الكون للعامة.", desc_en: "The best-selling popular science book explaining the universe.", url: "https://archive.org/details/abriefhistoryoftime00hawk", tags: ["علوم", "فيزياء"], cover: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=400" },
-            { id: 48, title_ar: "أصل الأنواع", title_en: "On the Origin of Species", author_ar: "تشارلز داروين", author_en: "Charles Darwin", desc_ar: "الكتاب العلمي المثير للجدل الذي غير وجه علم الأحياء والبيولوجيا.", desc_en: "The foundational book of evolutionary biology.", url: "https://archive.org/details/originofspecies00darw", tags: ["علوم", "أحياء"], cover: "https://images.unsplash.com/photo-1532187863486-abf9d39d6618?q=80&w=400" },
-            { id: 49, title_ar: "ثروة الأمم", title_en: "The Wealth of Nations", author_ar: "آدم سميث", author_en: "Adam Smith", desc_ar: "إنجيل الرأسمالية والاقتصاد الحديث وتحليل حركة الأسواق الحرة.", desc_en: "The foundational work of modern economics and capitalism.", url: "https://archive.org/details/wealthofnations00smit", tags: ["اقتصاد", "سياسة"], cover: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=400" },
-            { id: 50, title_ar: "كتاب العقد الفريد", title_en: "Al-Iqd al-Farid", author_ar: "ابن عبد ربه الأندلسي", author_en: "Ibn Abd Rabbih", desc_ar: "موسوعة أدبية أندلسية ضخمة تجمع الأخبار والأمثال والشعر والنوادر.", desc_en: "A major Andalusian literary encyclopedia of prose and history.", url: "https://archive.org/details/waq71752", tags: ["أدب", "تاريخ"], cover: "https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=400" }
-        ];
+        <div class="card" data-category="science">
+            <h3>31. أصل الأنواع</h3>
+            <p>الكتاب العلمي الشهير لتشارلز داروين الذي غير مفهوم علم الأحياء.</p>
+            <a href="https://www.hindawi.org/books/58636952/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="science">
+            <h3>32. الكون</h3>
+            <p>رحلة ممتعة وشيقة وثقافة علمية في الفضاء والنجوم لكارل ساغان.</p>
+            <a href="https://www.hindawi.org/books/91745260/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="science">
+            <h3>33. تاريخ موجز للزمن</h3>
+            <p>شرح مبسط وجذاب للكون والثقوب السوداء للعالم ستيفن هوكينج.</p>
+            <a href="https://www.hindawi.org/books/10274291/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="science">
+            <h3>34. النسبية لألبرت آينشتاين</h3>
+            <p>شرح مبسط للنظرية التي غيرت مفاهيم الفيزياء الحديثة والكون.</p>
+            <a href="https://www.hindawi.org/books/20342931/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="science">
+            <h3>35. الذكاء الاصطناعي</h3>
+            <p>مقدمة علمية غنية تتحدث عن مستقبل الآلات والبرمجة الذكية.</p>
+            <a href="https://www.hindawi.org/books/71630132/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="science">
+            <h3>36. بنية الثورات العلمية</h3>
+            <p>كتاب توماس كون الفلسفي العلمي الشهير حول تحول الأفكار والمناهج.</p>
+            <a href="https://www.hindawi.org/books/18652037/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="science">
+            <h3>37. سيكولوجية المال</h3>
+            <p>دروس خالدة وعميقة في الثروة، الطمع، والسعادة والتعامل مع المال.</p>
+            <a href="https://www.hindawi.org/books/12470953/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="science">
+            <h3>38. الذكاء العاطفي</h3>
+            <p>لماذا يمكن للذكاء العاطفي أن يمنحك نجاحاً أكبر من الذكاء العقلي؟</p>
+            <a href="https://www.hindawi.org/books/90176423/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="science">
+            <h3>39. العلم وأهدافه</h3>
+            <p>كتاب يناقش فلسفة العلم الحديث وغاياته وتأثيره في المجتمعات.</p>
+            <a href="https://www.hindawi.org/books/72648031/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="science">
+            <h3>40. التفكير السريع والبطيء</h3>
+            <p>تحليل دانيال كانمان لطريقتين يعمل بهما العقل البشري لاتخاذ القرار.</p>
+            <a href="https://www.hindawi.org/books/43209516/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
 
-        let currentLang = 'ar';
-        const uiWords = {
-            ar: {
-                title: "مكتبتي العالمية | تحميل وقراءة كتب بالمجان وروايات PDF", logo: "مكتبتي", login: "تسجيل الدخول",
-                heroTitle: "مرحباً بك في عالم الكتب المفتوحة", heroDesc: "ابحث عن أي كتاب (نجيب محفوظ، أحمد شوقي، روايات عالمية) وسنوجهك للمصدر فوراً",
-                placeholder: "اكتب اسم الكتاب، المؤلف، أو الكلمة المفتاحية...", searchBtn: "ابحث الآن",
-                catalogTitle: "المخزون المتوفر", btnRead: "قراءة الكتاب المفتوح",
-                footer: "جميع الكتب يتم توجيهها إلى روابط ومصادر مفتوحة ومشاع إبداعي قانوني",
-                tabLog: "تسجيل دخول", tabReg: "إنشاء حساب", dividerOr: "أو عبر حساباتك", googleText: "الدخول باستخدام حساب Google", welcome: "مرحباً، "
-            },
-            en: {
-                title: "Global Library | Free Books Directory & PDF Novels", logo: "MyLibrary", login: "Login",
-                heroTitle: "Welcome to the World of Open Books", heroDesc: "Search for any book (Mahfouz, Shawqi, American novels) and get redirected instantly",
-                placeholder: "Type book title, author, or keywords...", searchBtn: "Search Now",
-                catalogTitle: "Available Catalog", btnRead: "Read Open Book",
-                footer: "All books redirect to open-source and creative commons legal platforms",
-                tabLog: "Login", tabReg: "Register", dividerOr: "Or via your accounts", googleText: "Sign in with Google", welcome: "Welcome, "
+        <div class="card" data-category="arts">
+            <h3>41. مغامرات شرلوك هولمز</h3>
+            <p>مجموعة قصص التحقيق والذكاء الأكثر شهرة لأرثر كونان دويل.</p>
+            <a href="https://www.hindawi.org/books/52972410/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="arts">
+            <h3>42. دراسة في اللون القرمزي</h3>
+            <p>أول رواية ظهرت فيها شخصية المحقق الشهير شرلوك هولمز.</p>
+            <a href="https://www.hindawi.org/books/13761895/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="arts">
+            <h3>43. عصبة الرؤوس الحمراء</h3>
+            <p>إحدى مغامرات شرلوك هولمز المشوقة والمليئة بالألغاز المعقدة.</p>
+            <a href="https://www.hindawi.org/books/14352125/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="arts">
+            <h3>44. كلب آل باسكرفيل</h3>
+            <p>أشهر رواية طويلة مرعبة وغامضة من بطولة شرلوك هولمز والدكتور واطسون.</p>
+            <a href="https://www.hindawi.org/books/27460193/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="arts">
+            <h3>45. تاريخ الفنون الجميلة</h3>
+            <p>كتاب شيق يستعرض تطور الرسم والنحت والعمارة عبر العصور التاريخية.</p>
+            <a href="https://www.hindawi.org/books/13028649/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="arts">
+            <h3>46. الموسيقى العربية</h3>
+            <p>كتاب يبحث في تاريخ المقامات والآلات الموسيقية واللحن العربي الأصيل.</p>
+            <a href="https://www.hindawi.org/books/65203174/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="arts">
+            <h3>47. رحلات ابن بطوطة</h3>
+            <p>تحفة النظار في غرائب الأمصار وعجائب الأسفار للرحالة الشهير.</p>
+            <a href="https://www.hindawi.org/books/49156728/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="arts">
+            <h3>48. أوليفر تويست</h3>
+            <p>رواية تشارلز ديكنز الكلاسيكية حول معاناة وحياة الأطفال في لندن القديمة.</p>
+            <a href="https://www.hindawi.org/books/89240316/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="arts">
+            <h3>49. مسرحيات وليم شكسبير</h3>
+            <p>مجموعة روائع المسرح العالمي التراجيدي والكوميدي لشكسبير.</p>
+            <a href="https://www.hindawi.org/books/72834015/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+        <div class="card" data-category="arts">
+            <h3>50. طوق الحمامة</h3>
+            <p>كتاب ابن حزم الأندلسي الشهير في فلسفة الحب وأعراضه وأسبابه.</p>
+            <a href="https://www.hindawi.org/books/13725068/" target="_blank" class="btn">قراءة / تحميل</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.card');
+
+    // دالة الفلترة المشتركة (تدمج البحث مع زر التصفية)
+    function filterBooks() {
+        const searchText = searchInput.value.toLowerCase().trim();
+        const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+
+        cards.forEach(card => {
+            const title = card.querySelector('h3').textContent.toLowerCase();
+            const description = card.querySelector('p').textContent.toLowerCase();
+            const category = card.getAttribute('data-category');
+
+            // شرط البحث
+            const matchesSearch = title.includes(searchText) || description.includes(searchText);
+            // شرط التصنيف
+            const matchesFilter = (activeFilter === 'all') || (category === activeFilter);
+
+            // لو الكتاب بيطابق البحث والتصنيف مع بعض يظهر، غير كده يختفي
+            if (matchesSearch && matchesFilter) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
             }
-        };
+        });
+    }
 
-        function renderBooks(booksToDisplay) {
-            const container = document.getElementById('books-container');
-            container.innerHTML = '';
-            if(booksToDisplay.length === 0) {
-                container.innerHTML = `<p class="no-results">${currentLang === 'ar' ? 'عذراً، لم نجد نتائج تطابق بحثك.' : 'Sorry, no results matched your search.'}</p>`;
-                return;
-            }
-            booksToDisplay.forEach(book => {
-                const title = currentLang === 'ar' ? book.title_ar : book.title_en;
-                const author = currentLang === 'ar' ? book.author_ar : book.author_en;
-                const desc = currentLang === 'ar' ? book.desc_ar : book.desc_en;
-                
-                const cardHtml = `
-                    <div class="book-card">
-                        <div class="book-cover-wrapper">
-                            <img src="${book.cover}" class="book-cover-img" alt="${title}" loading="lazy">
-                        </div>
-                        <div class="book-details">
-                            <h3 class="book-title">${title}</h3>
-                            <p class="book-author">${author}</p>
-                            <p class="book-desc">${desc}</p>
-                            <a href="${book.url}" target="_blank" class="btn-redirect">${uiWords[currentLang].btnRead}</a>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += cardHtml;
-            });
-        }
+    // 1. تشغيل الفلترة عند الكتابة في شريط البحث
+    searchInput.addEventListener('input', filterBooks);
 
-        function executeSearch() {
-            const query = document.getElementById('search-input').value.toLowerCase().trim();
-            const filtered = booksDatabase.filter(book => {
-                return book.title_ar.toLowerCase().includes(query) || book.title_en.toLowerCase().includes(query) ||
-                       book.author_ar.toLowerCase().includes(query) || book.author_en.toLowerCase().includes(query);
-            });
-            renderBooks(filtered);
-        }
-
-        document.getElementById('btn-lang').addEventListener('click', function() {
-            currentLang = currentLang === 'ar' ? 'en' : 'ar';
-            this.textContent = currentLang === 'ar' ? 'English' : 'العربية';
-            const root = document.getElementById('html-root');
-            root.setAttribute('dir', currentLang === 'en' ? 'ltr' : 'rtl');
-            root.setAttribute('lang', currentLang);
-
-            document.getElementById('site-title').textContent = uiWords[currentLang].title;
-            document.getElementById('text-logo').textContent = uiWords[currentLang].logo;
-            if(document.getElementById('user-welcome').classList.contains('hidden')) {
-                document.getElementById('btn-login-toggle').textContent = uiWords[currentLang].login;
-            }
-            document.getElementById('hero-title').textContent = uiWords[currentLang].heroTitle;
-            document.getElementById('hero-desc').textContent = uiWords[currentLang].heroDesc;
-            document.getElementById('search-input').placeholder = uiWords[currentLang].placeholder;
-            document.getElementById('btn-search').textContent = uiWords[currentLang].searchBtn;
-            document.getElementById('catalog-title').textContent = uiWords[currentLang].catalogTitle;
-            document.getElementById('footer-text').textContent = uiWords[currentLang].footer;
-            document.getElementById('tab-login').textContent = uiWords[currentLang].tabLog;
-            document.getElementById('tab-register').textContent = uiWords[currentLang].tabReg;
-            document.getElementById('text-or').textContent = uiWords[currentLang].dividerOr;
-            document.getElementById('text-google-btn').textContent = uiWords[currentLang].googleText;
+    // 2. تشغيل الفلترة عند الضغط على أزرار التصنيفات
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // شيل كلاس active من الزر القديم وحطه في الجديد
+            document.querySelector('.filter-btn.active').classList.remove('active');
+            button.classList.add('active');
             
-            executeSearch(); 
+            // شغل الفلترة
+            filterBooks();
         });
+    });
+</script>
 
-        document.getElementById('search-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') executeSearch();
-        });
-
-        function toggleLoginModal() { document.getElementById('login-modal').classList.toggle('hidden'); }
-
-        function switchAuthTab(type) {
-            const tabLogin = document.getElementById('tab-login');
-            const tabRegister = document.getElementById('tab-register');
-            const formLogin = document.getElementById('form-login');
-            const formRegister = document.getElementById('form-register');
-
-            if (type === 'login') {
-                tabLogin.classList.add('active');
-                tabRegister.classList.remove('active');
-                formLogin.classList.remove('hidden');
-                formRegister.classList.add('hidden');
-            } else {
-                tabRegister.classList.add('active');
-                tabLogin.classList.remove('active');
-                formRegister.classList.remove('hidden');
-                formLogin.classList.add('hidden');
-            }
-        }
-
-        function processLoggedInUser(name) {
-            toggleLoginModal();
-            document.getElementById('btn-login-toggle').classList.add('hidden');
-            const welcomeSpan = document.getElementById('user-welcome');
-            welcomeSpan.textContent = uiWords[currentLang].welcome + name;
-            welcomeSpan.classList.remove('hidden');
-        }
-
-        function handleAuthSubmit(event, type) {
-            event.preventDefault();
-            let name = "";
-            if (type === 'login') {
-                const email = document.getElementById('login-email').value;
-                name = email.split('@')[0];
-            } else {
-                name = document.getElementById('reg-name').value;
-            }
-            processLoggedInUser(name);
-        }
-
-        function handleGoogleLogin() {
-            let promptMsg = currentLang === 'ar' ? "يرجى كتابة اسمك للمحاكاة الذكية لتسجيل الدخول بجوجل:" : "Please enter your name for smart Google Sign-In simulation:";
-            let name = prompt(promptMsg);
-            if (name && name.trim() !== "") {
-                processLoggedInUser(name.trim());
-            }
-        }
-
-        renderBooks(booksDatabase);
-    </script>
-</body>document.getElementById('myButton').addEventListener('click', function() {
-    document.getElementById('myText').textContent = 'تم التغيير!';
-});
-
+</body>
 </html>
-
